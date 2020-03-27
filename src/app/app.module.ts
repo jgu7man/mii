@@ -9,6 +9,9 @@ import { MaterialModule } from "./material.module";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { PublicModule } from "./public/public.module";
+import { AdminModule } from "./admin/admin.module";
+
 @NgModule({
   declarations: [
     AppComponent
@@ -21,6 +24,8 @@ import { AppComponent } from './app.component';
     ReactiveFormsModule,
     HttpClientModule,
     MaterialModule,
+    PublicModule,
+    AdminModule
   ],
   providers: [
     DatePipe,
