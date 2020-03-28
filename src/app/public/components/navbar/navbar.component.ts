@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../admin/auth/auth.service';
+import { AuthService } from 'src/app/admin/auth/auth.service';
 
 @Component({
   selector: 'mii-navbar',
