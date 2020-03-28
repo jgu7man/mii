@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ComunesModule } from '../comunes.module';
+
 import { PublicComponent } from './public.component';
 import { MaterialModule } from "../material.module";
 import { PublicRoutingModule } from "./public-routing.module";
@@ -12,8 +14,8 @@ import { AgentesComponent } from './components/usuarios/agentes/agentes.componen
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { CrearAgenteComponent } from './components/usuarios/agentes/crear-agente/crear-agente.component';
-import { FormCrearAgenteComponent } from './components/usuarios/agentes/form-crear-agente/form-crear-agente.component';
-import { FormAgregarAgenteComponent } from './components/usuarios/agentes/form-agregar-agente/form-agregar-agente.component';
+import { FormCrearAgenteComponent } from './components/usuarios/agentes/crear-agente/form-crear-agente/form-crear-agente.component';
+import { FormAgregarAgenteComponent } from './components/usuarios/agentes/crear-agente/form-agregar-agente/form-agregar-agente.component';
 
 
 
@@ -35,8 +37,8 @@ import { FormAgregarAgenteComponent } from './components/usuarios/agentes/form-a
     CommonModule,
     MaterialModule,
     AuthModule,
-    PublicRoutingModule
-    
+    PublicRoutingModule,
+    ComunesModule
   ]
 })
 export class PublicModule { }

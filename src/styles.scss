@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import './mat-clean.scss';
 html,
 body {
     height: 100%;
@@ -19,4 +20,9 @@ $ligth: #f5f5f5;
 
 .lightText {
     color: $ligth !important;
+}
+
+.mat-card:not([class*=mat-elevation-z]).plain {
+    box-shadow: none !important;
+    background: transparent;
 }

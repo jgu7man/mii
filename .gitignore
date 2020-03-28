@@ -18,9 +18,9 @@ speed-measure-plugin*.json,
 #sensible firebase docs
 /.fierebase
 /functions 
-src/envitonments/*.json
-src/environments/
 src/environments/agentemii-firebase-adminsdk-dorkj-2f2bc75f9f.json
+src/environments/environment.ts
+src/environments/environment.prod.ts
 
 # IDEs and editors
 /.idea
@@ -52,4 +52,5 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
 

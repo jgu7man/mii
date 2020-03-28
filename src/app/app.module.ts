@@ -1,9 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, Title } from '@angular/platform-browser';
-import { HttpClientModule } from "@angular/common/http";
-import { DatePipe } from "@angular/common";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ComunesModule } from './comunes.module';
 
 // *Global modules
 import { MaterialModule } from "./material.module";
@@ -21,6 +17,7 @@ import { PublicRoutingModule } from "./public/public-routing.module";
 import { AdminModule } from './admin/admin.module';
 import { AdminRoutingModule } from "./admin/admin-routing.module";
 import { AuthModule } from './admin/auth/auth.module';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 
@@ -31,10 +28,7 @@ import { AuthModule } from './admin/auth/auth.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
+    ComunesModule,
     MaterialModule,
     PublicModule,
     PublicRoutingModule,
@@ -44,8 +38,6 @@ import { AuthModule } from './admin/auth/auth.module';
     AuthModule
   ],
   providers: [
-    DatePipe,
-    Title,
   ],
   bootstrap: [AppComponent]
 })
