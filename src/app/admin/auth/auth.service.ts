@@ -3,22 +3,37 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { auth } from 'firebase/app'
 import { Router } from '@angular/router';
+import { of, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  user$: Observable<any>
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
     private router: Router
-  ) { }
+  ) {
+
+
+    //? Método para cargar el usuario autenticado de manera asíncrona
+    this.user$ = this.afAuth.authState.pipe(
+      switchMap( user => { return user ? 
+          this.afs.doc<UserInterface>(`usuarios/${user.uid}`).valueChanges() :
+          of(null);
+      })
+    )
+   }
 
   
 
+  
+   // ? Iniciar sesión con una cuenta google
   async googleSingIn() {
-    // Iniciar sesión con una cuenta google
+    // Abre el popup de autenticación
     const provider = new auth.GoogleAuthProvider();
     var credential = await this.afAuth.auth.signInWithPopup(provider)
       
@@ -31,7 +46,6 @@ export class AuthService {
 
   }
 
-
   private async updateUserData({ uid, email, displayName, photoURL }: UserInterface) {
     // Buscar el usuario en la base de datos de firebase
     const userRef: AngularFirestoreDocument<UserInterface> = this.afs.doc(`usuarios/${uid}`);
@@ -42,14 +56,25 @@ export class AuthService {
     if (userDoc.exists) {
       var data = { uid, email, displayName, photoURL }
       userRef.set(data, { merge: true })
+      localStorage.setItem('mii', JSON.stringify(userDoc.data()))
     } else {
       var newData = { uid, email, displayName, photoURL, dateRegist }
       userRef.set(newData, { merge: true })
+      localStorage.setItem('mii', JSON.stringify(newData))
     }
 
     
-    localStorage.setItem('mii', JSON.stringify(userDoc.data()))
     this.router.navigate(['']);
+  }
+
+
+
+  //? Cerrar sesión
+
+  async singOut() {
+    await this.afAuth.auth.signOut();
+    localStorage.removeItem('mii')
+     return this.router.navigate(['/']);
   }
 
 }

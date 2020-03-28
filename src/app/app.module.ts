@@ -5,14 +5,21 @@ import { DatePipe } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+// *Global modules
 import { MaterialModule } from "./material.module";
 import { FirebaseModule } from './Firebase.module';
 
+// *ROOT modules
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+// *Public modules
 import { PublicModule } from "./public/public.module";
-import { AdminModule } from "./admin/admin.module";
+
+// * Admin modules
+import { AdminModule } from './admin/admin.module';
+import { AuthModule } from './admin/auth/auth.module';
+
 
 
 @NgModule({
@@ -29,7 +36,8 @@ import { AdminModule } from "./admin/admin.module";
     MaterialModule,
     PublicModule,
     AdminModule,
-    FirebaseModule
+    FirebaseModule,
+    AuthModule
   ],
   providers: [
     DatePipe,
