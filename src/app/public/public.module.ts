@@ -12,6 +12,8 @@ import { AgentesComponent } from './components/usuarios/agentes/agentes.componen
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { CrearAgenteComponent } from './components/usuarios/agentes/crear-agente/crear-agente.component';
+import { FormCrearAgenteComponent } from './components/usuarios/agentes/form-crear-agente/form-crear-agente.component';
+import { FormAgregarAgenteComponent } from './components/usuarios/agentes/form-agregar-agente/form-agregar-agente.component';
 
 
 
@@ -26,6 +28,8 @@ import { CrearAgenteComponent } from './components/usuarios/agentes/crear-agente
     DashboardComponent,
     SidenavComponent,
     CrearAgenteComponent,
+    FormCrearAgenteComponent,
+    FormAgregarAgenteComponent,
   ],
   imports: [
     CommonModule,
