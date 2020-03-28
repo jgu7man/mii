@@ -1,11 +1,23 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, ExtraOptions } from '@angular/router';
-import { PublicModule } from './public.module';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { PublicComponent } from './public.component';
+import { AgentesComponent } from './components/usuarios/agentes/agentes.component';
+import { CrearAgenteComponent } from './components/usuarios/agentes/crear-agente/crear-agente.component';
 
 
 const routes: Routes = [
-  { path: '', component: PublicModule}
-];
+  {
+    path: '', component: PublicComponent, children: [
+      {
+        path: 'dashboard', component: DashboardComponent, children: [
+          {
+            path: '', component: AgentesComponent, children: [
+              { path: '', component: CrearAgenteComponent}
+            ]}
+          ]}
+        ]}
+  ];
 
 
 const routerOptions: ExtraOptions = {
@@ -19,4 +31,4 @@ const routerOptions: ExtraOptions = {
   imports: [RouterModule.forRoot(routes, routerOptions)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class PublicRoutingModule { }

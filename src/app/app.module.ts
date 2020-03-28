@@ -15,9 +15,11 @@ import { AppComponent } from './app.component';
 
 // *Public modules
 import { PublicModule } from "./public/public.module";
+import { PublicRoutingModule } from "./public/public-routing.module";
 
 // * Admin modules
 import { AdminModule } from './admin/admin.module';
+import { AdminRoutingModule } from "./admin/admin-routing.module";
 import { AuthModule } from './admin/auth/auth.module';
 
 
@@ -35,7 +37,9 @@ import { AuthModule } from './admin/auth/auth.module';
     HttpClientModule,
     MaterialModule,
     PublicModule,
+    PublicRoutingModule,
     AdminModule,
+    AdminRoutingModule,
     FirebaseModule,
     AuthModule
   ],

@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, ExtraOptions } from '@angular/router';
 
 
-const routes: Routes = [];
+const routes: Routes = [
+  
+];
 
 
 const routerOptions: ExtraOptions = {
@@ -16,4 +18,4 @@ const routerOptions: ExtraOptions = {
   imports: [RouterModule.forRoot(routes, routerOptions)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AdminRoutingModule { }
