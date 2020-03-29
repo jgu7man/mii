@@ -4,7 +4,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { auth } from 'firebase/app'
 import { Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -37,9 +37,7 @@ export class AuthService {
     const provider = new auth.GoogleAuthProvider();
     var credential = await this.afAuth.auth.signInWithPopup(provider)
       
-    // Obtener el token
-    var token = await this.afAuth.auth.currentUser.getIdToken(true)
-    localStorage.setItem('tokenId', token)
+    
       
     // Guardar los datos de cliente nuevo en firebase
     return this.updateUserData(credential.user)
@@ -65,6 +63,20 @@ export class AuthService {
 
     
     this.router.navigate(['']);
+  }
+
+
+  // ? Obtiene token
+  async getToken() {
+    const provider = new auth.GoogleAuthProvider();
+    var credential = await (await this.afAuth.auth.signInWithPopup(provider))
+    // Obtener el token
+    var token = await this.afAuth.auth.currentUser.getIdTokenResult(false)
+    console.log(token)
+    localStorage.setItem('tokenId', token.token)
+    
+    
+    return await this.afAuth.authState.pipe(first()).toPromise() ? true : false
   }
 
 

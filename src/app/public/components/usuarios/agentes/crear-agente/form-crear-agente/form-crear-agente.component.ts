@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AgenteModel } from '../agente.model';
+import { AgenteService } from '../../agente.service';
 
 @Component({
   selector: 'mii-form-crear-agente',
@@ -9,13 +10,25 @@ import { AgenteModel } from '../agente.model';
 export class FormCrearAgenteComponent implements OnInit {
 
   agente: AgenteModel
-  constructor() {
-    this.agente = new AgenteModel('','','','','','','MATCH_MODE_HYBRID',true, 'API_VERSION_V2')
-   }
+  constructor(
+    private _agente: AgenteService
+  ) {
+    this.agente = new AgenteModel('','','es-419','America/New_York','','')
+  }
+  
+  
 
   ngOnInit() {
   }
 
+
+  onSubmit() {
+    console.log(this.agente)
+    this._agente.saveAgent(this.agente)
+  }
+
+
+  // Arreglo de lenguaje
   lenguajes = [
     { name: 'Alemán', code: 'de' },
     { name: 'Coreano', code: 'ko' },
@@ -33,6 +46,9 @@ export class FormCrearAgenteComponent implements OnInit {
     { name: 'Portugués', code: 'pt-BR' },
     { name: 'Ruso', code: 'ru' },
   ]
+
+
+  // Arreglo de zonas horarias
 
   zonasHorarias = [
     {display:'(GMT-12:00) Etc/GMT+12', value:'Etc/GMT+12'},

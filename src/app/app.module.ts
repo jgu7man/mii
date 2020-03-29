@@ -18,6 +18,8 @@ import { AdminModule } from './admin/admin.module';
 import { AdminRoutingModule } from "./admin/admin-routing.module";
 import { AuthModule } from './admin/auth/auth.module';
 import { BrowserModule } from '@angular/platform-browser';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthenticateService } from './admin/auth/authenticate.service';
 
 
 
@@ -38,6 +40,11 @@ import { BrowserModule } from '@angular/platform-browser';
     AuthModule
   ],
   providers: [
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: AuthenticateService,
+    //   multi: true
+    // }
   ],
   bootstrap: [AppComponent]
 })
