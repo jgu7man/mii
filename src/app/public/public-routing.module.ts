@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, ExtraOptions } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PublicComponent } from './public.component';
-import { AgentesComponent } from './components/usuarios/agentes/agentes.component';
-import { CrearAgenteComponent } from './components/usuarios/agentes/crear-agente/crear-agente.component';
+import { AgentesComponent } from './components/agentes/agentes.component';
+import { InitAgenteComponent } from './components/agentes/init-agente/init-agente.component';
 
 
 const routes: Routes = [
@@ -12,8 +12,8 @@ const routes: Routes = [
       {
         path: 'dashboard', component: DashboardComponent, children: [
           {
-            path: '', component: AgentesComponent, children: [
-              { path: '', component: CrearAgenteComponent}
+            path: 'agentes', component: AgentesComponent, children: [
+              { path: 'init', component: InitAgenteComponent}
             ]}
           ]}
         ]}

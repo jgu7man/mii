@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AgenteModel } from '../agente.model';
 
 @Component({
   selector: 'mii-form-agregar-agente',
