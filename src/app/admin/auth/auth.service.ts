@@ -5,6 +5,14 @@ import { auth } from 'firebase/app'
 import { Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
 import { switchMap, first } from 'rxjs/operators';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+// import * as google from 'googleapis'
+
+// const oauth2Client = new google.auth.OAuth2(
+//   '683912406589-acc9kkbnqu7qgao221kuk6aqanqli01b.apps.googleusercontent.com',
+//   'FsTiRJz155vCC0CE3HRu-v0u',
+//   'http://localhost'
+// );
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +23,8 @@ export class AuthService {
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private _http: HttpClient
   ) {
 
 
@@ -69,14 +78,39 @@ export class AuthService {
   // ? Obtiene token
   async getToken() {
     const provider = new auth.GoogleAuthProvider();
+
+    var authed = await this.afAuth.authState.pipe(first()).toPromise() ? true : false;
+
+    console.log({authed})
+
+    // if (!authed) {
+
     var credential = await (await this.afAuth.auth.signInWithPopup(provider))
+    console.log(credential)
+    var json = await credential.credential.toJSON()
+    console.log(json)
+      var accessToken = json['oauthAccessToken']
+
+      // localStorage.setItem('accessToken', accessToken )
+    // } else {
+      
+      // var accessToken = localStorage.getItem('accessToken')
+      // if(!accessToken){
+      //   var credential = await (await this.afAuth.auth.signInWithPopup(provider))
+      //   var json = await credential.credential.toJSON()
+      //   var accessToken = json['oauthAccessToken']
+      //   localStorage.setItem('accessToken', accessToken)
+      // }
+
+    // }
     // Obtener el token
-    var token = await this.afAuth.auth.currentUser.getIdTokenResult(false)
-    console.log(token)
-    localStorage.setItem('tokenId', token.token)
+    // var token = await this.afAuth.auth.currentUser.getIdTokenResult(false)
+    // console.log(token)
+
+
+    // console.log({accessToken})
+    return false
     
-    
-    return await this.afAuth.authState.pipe(first()).toPromise() ? true : false
   }
 
 
@@ -88,6 +122,49 @@ export class AuthService {
     localStorage.removeItem('mii')
      return this.router.navigate(['/']);
   }
+
+
+  async googleApis() {
+    // const url = await oauth2Client.generateAuthUrl( {
+    //   access_type: 'offline',
+    //   scope: [
+    //     'https://www.googleapis.com/auth/cloud-platform',
+    //     'https://www.googleapis.com/auth/cloudplatformprojects'
+    //   ]
+    // } );
+
+    // const { tokens } = await oauth2Client.getToken( code )
+    // oauth2Client.setCredentials( tokens );
+    return
+  }
+
+
+
+  openPopup () {
+    const name = 'Authorization'
+    const options = `width=${ 500 },height=${ 600 },left=${ 0 },top=${ 0 }`;
+    const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=683912406589-acc9kkbnqu7qgao221kuk6aqanqli01b.apps.googleusercontent.com&response_type=code&include_granted_scopes=true&scope=https%3A//www.googleapis.com/auth/cloud-platform&redirect_uri=http://localhost&access_type=offline`;
+
+    console.log( url )
+
+    return window.open( url, name, options );
+  }
+
+
+  authApi (): Observable<any> {
+
+    let headers = new HttpHeaders( {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    } )
+
+    let body = `code=4%2FywHm6ijVW1UcYKgZM8iu-StiIEs_-caQOoafqlcRQMIVTMc8nNpbOzjQj__c5eb-WX76lMEwADnEHhpMLS0ixR8&client_id=683912406589-acc9kkbnqu7qgao221kuk6aqanqli01b.apps.googleusercontent.com&client_secret=FsTiRJz155vCC0CE3HRu-v0u&grant_type=authorization_code&redirect_uri=http://localhost`
+
+
+    return this._http.post( `https://www.googleapis.com/oauth2/v4/token`,
+      body, { headers: headers } )
+  }
+
+  
 
 }
 

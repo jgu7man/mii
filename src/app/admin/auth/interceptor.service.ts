@@ -5,7 +5,7 @@ import { AuthService } from './auth.service';
 import { tap, map } from 'rxjs/operators';
 
 @Injectable()
-export class AuthenticateService implements HttpInterceptor {
+export class InterceptorService implements HttpInterceptor {
     
     
     constructor(private _auth: AuthService) { }

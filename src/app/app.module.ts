@@ -19,7 +19,7 @@ import { AdminRoutingModule } from "./admin/admin-routing.module";
 import { AuthModule } from './admin/auth/auth.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthenticateService } from './admin/auth/authenticate.service';
+import { InterceptorService } from './admin/auth/interceptor.service';
 
 
 
