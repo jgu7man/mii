@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ResponsiveService } from 'src/app/services/responsive.service';
 
 @Component({
   selector: 'mii-init-agente',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InitAgenteComponent implements OnInit {
 
-  constructor() { }
+  constructor(public responsive: ResponsiveService) { }
 
   ngOnInit() {
   }

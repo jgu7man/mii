@@ -38,3 +38,14 @@ textarea.materialize-textarea {
     border-bottom: none !important;
     box-shadow: none !important;
 }
+
+
+@media screen and (max-width: 700px){
+    mat-expansion-panel-header {
+        height: auto !important;
+        padding: 1em !important;
+        .mat-content {
+            flex-direction: column !important;
+        }
+    }
+}
