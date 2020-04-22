@@ -1,13 +1,13 @@
 <mat-drawer-container class="dash-container" hasBackdrop="false">
 
-    <mat-drawer #sideNav class="side-nav" mode="side" opened="true" position="start">
+    <mat-drawer *ngIf="!responsive.small()" #sideNav class="side-nav" mode="side" opened="true" position="start">
         <mii-sidenav></mii-sidenav>
         <mat-toolbar class="sidenav-footer">
             <button mat-raised-button color="accent" (click)="testChat.toggle()">Probar chat</button>
         </mat-toolbar>
     </mat-drawer>
 
-    <mat-drawer #testChat class="test-chat" mode="over" position="end">
+    <mat-drawer *ngIf="!responsive.small()" #testChat class="test-chat" mode="over" position="end">
         Test-chat
     </mat-drawer>
 

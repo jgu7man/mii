@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ResponsiveService } from 'src/app/services/responsive.service';
 
 @Component({
   selector: 'mii-dashboard',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor (
+    public responsive: ResponsiveService
+  ) { }
 
   ngOnInit() {
   }
