@@ -4,6 +4,7 @@ import { AlertMsgModel } from './models/alert-msg.model';
 import { AlertAskModel } from "./models/alert-ask.model";
 import { MatDialog } from '@angular/material/dialog';
 import { MessageComponent } from './message/message.component';
+import { AskComponent } from './ask/ask.component';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,6 @@ export class AlertService {
       data: mensaje
     } )
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       this.respuestaAlerta$.next( result );
     });
 
@@ -44,12 +44,11 @@ export class AlertService {
     if ( !pregunta.respTrue ) pregunta.respTrue = 'aceptar'
     if ( !pregunta.respFalse ) pregunta.respFalse = 'cancelar'
 
-    const dialogRef = this.dialogBox.open( MessageComponent, {
+    const dialogRef = this.dialogBox.open( AskComponent, {
       width: '300px',
       data: pregunta
     } )
     dialogRef.afterClosed().subscribe( result => {
-      console.log( 'The dialog was closed' );
       this.respuestaAlerta$.next( result );
     } )
 

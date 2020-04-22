@@ -16,6 +16,10 @@ import { AskComponent } from './ask/ask.component';
   imports: [
     CommonModule,
     MaterialModule
+  ],
+  entryComponents: [
+    MessageComponent,
+    AskComponent,
   ]
 })
 export class AlertModule { }

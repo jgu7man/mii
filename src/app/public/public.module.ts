@@ -5,7 +5,6 @@ import { ComunesModule } from '../comunes.module';
 import { PublicComponent } from './public.component';
 import { MaterialModule } from "../material.module";
 import { PublicRoutingModule } from "./public-routing.module";
-import { AlertModule } from '../admin/services/alert/alert.module';
 
 import { LoginComponent } from './components/navbar/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -17,6 +16,7 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { FormCrearAgenteComponent } from './components/agentes/init-agente/form-crear-agente/form-crear-agente.component';
 import { FormAgregarAgenteComponent } from './components/agentes/init-agente/form-agregar-agente/form-agregar-agente.component';
 import { InitAgenteComponent } from './components/agentes/init-agente/init-agente.component';
+import { AlertModule } from '../global/alert/alert.module';
 
 
 

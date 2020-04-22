@@ -20,6 +20,7 @@ export class HistoryService {
     var histRef = docRef.collection( 'historial' )
     var eventAdded = histRef.add( {
       time: new Date(), type: event.type, head: event.head, body: event.body
-    })
+    } )
+    return
   }
 }

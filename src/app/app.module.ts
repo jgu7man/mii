@@ -4,6 +4,7 @@ import { ComunesModule } from './comunes.module';
 // *Global modules
 import { MaterialModule } from "./material.module";
 import { FirebaseModule } from './Firebase.module';
+import { AlertModule } from './global/alert/alert.module';
 
 // *ROOT modules
 import { AppRoutingModule } from './app-routing.module';
@@ -37,7 +38,8 @@ import { InterceptorService } from './admin/auth/interceptor.service';
     AdminModule,
     AdminRoutingModule,
     FirebaseModule,
-    AuthModule
+    AuthModule,
+    AlertModule
   ],
   providers: [
     // {
