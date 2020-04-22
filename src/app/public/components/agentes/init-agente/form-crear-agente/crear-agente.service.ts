@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AgenteModel } from './agente.model';
+import { AgenteModel } from '../agente.model';
 import { AuthService } from 'src/app/admin/auth/auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UserInterface } from 'src/app/admin/auth/auth.service';

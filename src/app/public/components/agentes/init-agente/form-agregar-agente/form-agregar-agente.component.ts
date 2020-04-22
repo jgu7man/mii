@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AgenteModel } from '../agente.model';
 
 @Component({
   selector: 'mii-form-agregar-agente',
@@ -7,12 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormAgregarAgenteComponent implements OnInit {
 
-  agente
+  public agente
   constructor() {
-    this.agente
+    this.agente = new AgenteModel('','','','')
   }
 
   ngOnInit() {
   }
+
+  
 
 }
