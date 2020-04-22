@@ -1,0 +1,62 @@
+import { Injectable } from '@angular/core';
+import { Subject, Observable } from 'rxjs';
+import { AlertMsgModel, AlertAskModel } from './alerts.model';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MessageComponent } from './message/message.component';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AlertService {
+
+  mensajeAlerta$ = new Subject<AlertMsgModel>()
+  preguntaAlerta$ = new Subject<AlertAskModel>()
+  respuestaAlerta$ = new Subject<boolean>()
+
+
+  constructor (
+    private dialogBox: MatDialog
+  ) { }
+
+  // Función que envía un mensaje de alerta
+  // y espera la confirmación de la lectura del usuario
+  sendAlertMessage( mensaje: AlertMsgModel ): Observable<any> {
+    if ( !mensaje.confirmacion ) mensaje.confirmacion = 'aceptar'
+
+    const dialogRef = this.dialogBox.open( MessageComponent, {
+      width: '300px',
+      data: mensaje
+    } )
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.respuestaAlerta$.next( result );
+    });
+
+    return this.respuestaAlerta$
+  }
+
+
+  // Función que envía una pregunta como alerta
+  // y espera la respuesta true o false del usuario
+  sendAlertAsk( pregunta: AlertAskModel ): Observable<any> {
+
+    if ( !pregunta.respTrue ) pregunta.respTrue = 'aceptar'
+    if ( !pregunta.respFalse ) pregunta.respFalse = 'cancelar'
+
+    const dialogRef = this.dialogBox.open( MessageComponent, {
+      width: '300px',
+      data: pregunta
+    } )
+    dialogRef.afterClosed().subscribe( result => {
+      console.log( 'The dialog was closed' );
+      this.respuestaAlerta$.next( result );
+    } )
+
+    return this.respuestaAlerta$
+  }
+
+  sendAlertRequest() {
+    
+  }
+
+}

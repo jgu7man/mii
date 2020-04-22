@@ -5,6 +5,7 @@ import { ComunesModule } from '../comunes.module';
 import { PublicComponent } from './public.component';
 import { MaterialModule } from "../material.module";
 import { PublicRoutingModule } from "./public-routing.module";
+import { AlertModule } from '../admin/services/alert/alert.module';
 
 import { LoginComponent } from './components/navbar/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -38,7 +39,8 @@ import { InitAgenteComponent } from './components/agentes/init-agente/init-agent
     MaterialModule,
     AuthModule,
     PublicRoutingModule,
-    ComunesModule
+    ComunesModule,
+    AlertModule
   ]
 })
 export class PublicModule { }
