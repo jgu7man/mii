@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
-import { AlertMsgModel, AlertAskModel } from './alerts.model';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AlertMsgModel } from './models/alert-msg.model';
+import { AlertAskModel } from "./models/alert-ask.model";
+import { MatDialog } from '@angular/material/dialog';
 import { MessageComponent } from './message/message.component';
 
 @Injectable({

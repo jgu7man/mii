@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertMsgModel, AlertAskModel } from './alerts.model';
+import { AlertMsgModel } from './models/alert-msg.model';
+import { AlertAskModel } from "./models/alert-ask.model";
 import { AlertService } from './alert.service';
 
 @Component({

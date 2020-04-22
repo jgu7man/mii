@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { AlertAskModel } from '../alerts.model';
+import { AlertAskModel } from "../models/alert-ask.model";
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
