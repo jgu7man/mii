@@ -25,9 +25,10 @@ export class AgenteService {
   async saveAgent(agente: AgenteModel) {
 
     // Obtener datos del usuario
-    var accessToken;
+    var accessToken 
+      await this._auth.getToken()
     
-    this.createProject().subscribe( res => {
+    this.createProject(accessToken).subscribe( res => {
       console.log(res)
     })
 
@@ -128,15 +129,16 @@ export class AgenteService {
   
   
   // ? Crear proyecto
-  createProject(agente?: AgenteModel, token?): Observable<any>{
+  createProject( token?): Observable<any>{
 
-    console.log('creando proyecto')
+    console.log( 'creando proyecto' )
+    var access_token = localStorage.getItem('access_token')
 
+    var apiKey = 'AIzaSyAcS__2e4K6ouok1SP2Z6IpbLXeqN90suE'
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'X-Requested-With': 'XMLHttpRequest',
-      'scope': 'https://www.googleapis.com/auth/cloud-platform',
-      'Authorization': 'Bearer ya29.a0Ae4lvC0t_7pftEmBPxLxJ613siFpWWOswXMH8f_dcwMHvYEMcKLz9V5jstINNEuEljdbhrttSCbCeZ25b4PV-EJ_eetnbdLEAtXKyRJRFgLG61_zoE5T1CuHDYClve_sLcBeUNp-8kwHashiTSmgeYvUGEvx32IEjlQ'
+      'Accept': 'application/json',
+      'Authorization': 'Bearer '+token
     })
 
     
@@ -151,7 +153,7 @@ export class AgenteService {
     }
 
 
-    return this._http.post(`https://cloudresourcemanager.googleapis.com/v1/projects`,
+    return this._http.post( `https://cloudresourcemanager.googleapis.com/v1/projects?key=${apiKey} HTTP/1.1`,
       body,
       { headers: headers }
     )
