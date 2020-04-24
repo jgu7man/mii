@@ -132,13 +132,13 @@ export class AgenteService {
   createProject( token?): Observable<any>{
 
     console.log( 'creando proyecto' )
-    var access_token = localStorage.getItem('access_token')
+    var access_token = localStorage.getItem('googleTokens')
 
     var apiKey = 'AIzaSyAcS__2e4K6ouok1SP2Z6IpbLXeqN90suE'
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': 'Bearer '+token
+      'Authorization': 'Bearer ' + access_token
     })
 
     
