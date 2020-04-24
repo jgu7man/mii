@@ -5,6 +5,8 @@ import { AuthAdminComponent } from './components/admin/auth-admin.component';
 import { AuthPublicComponent } from './components/public/auth-public.component';
 import { AuthGoogleButtonComponent } from './components/auth-google-button/auth-google-button.component';
 import { LoginButtonComponent, LoginButtonDialog } from './components/login-button/login-button.component';
+import { CodeGetterComponent } from './components/code-getter/code-getter.component';
+import { GetAuthComponent } from './components/get-auth/get-auth.component';
 
 
 
@@ -15,6 +17,8 @@ import { LoginButtonComponent, LoginButtonDialog } from './components/login-butt
     AuthGoogleButtonComponent,
     LoginButtonComponent,
     LoginButtonDialog,
+    CodeGetterComponent,
+    GetAuthComponent,
   ],
   entryComponents: [
     LoginButtonDialog

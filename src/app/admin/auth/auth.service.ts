@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { auth } from 'firebase/app'
 import { Router } from '@angular/router';
-import { of, Observable } from 'rxjs';
+import { of, Observable, Subject } from 'rxjs';
 import { switchMap, first } from 'rxjs/operators';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 // import * as google from 'googleapis'
@@ -20,6 +20,8 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 export class AuthService {
 
   user$: Observable<any>
+  authenticated$: Subject<any> = new Subject()
+
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
@@ -143,24 +145,25 @@ export class AuthService {
 
 
 
-  openPopup () {
+  openPopup (): Observable<any> {
     const name = 'Authorization'
     const options = `width=${ 500 },height=${ 600 },left=${ 0 },top=${ 0 }`;
-    const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=683912406589-acc9kkbnqu7qgao221kuk6aqanqli01b.apps.googleusercontent.com&response_type=code&include_granted_scopes=true&scope=https%3A//www.googleapis.com/auth/cloud-platform&redirect_uri=http://localhost&access_type=offline`;
+    const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=683912406589-acc9kkbnqu7qgao221kuk6aqanqli01b.apps.googleusercontent.com&response_type=code&include_granted_scopes=true&scope=https%3A//www.googleapis.com/auth/cloud-platform&redirect_uri=http://localhost:4200/appadmin/code&access_type=offline`;
 
-    return window.open( url, name, options );
+    window.open( url, name );
+    return this.authenticated$
   }
 
 
-  authApi (): Observable<any> {
+  authApi (code): Observable<any> {
 
     let headers = new HttpHeaders( {
       'Content-Type': 'application/x-www-form-urlencoded'
     } )
 
-    let body = `code=4%2FzAFnWrmeYjkvy-r3LhVOkTuZHN6rAwj3UgALPqQXgqFIP_H4QtAk5Y7e5AiwLWW_KLknPTLw6ihEUkMAXDTUYJI&client_id=683912406589-acc9kkbnqu7qgao221kuk6aqanqli01b.apps.googleusercontent.com&client_secret=FsTiRJz155vCC0CE3HRu-v0u&grant_type=authorization_code&redirect_uri=http://localhost`
+    console.log(code)
 
-    // http://localhost/?code=4%2FzAFnWrmeYjkvy-r3LhVOkTuZHN6rAwj3UgALPqQXgqFIP_H4QtAk5Y7e5AiwLWW_KLknPTLw6ihEUkMAXDTUYJI&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&authuser=2&prompt=consent#
+    let body = `code=${code}&client_id=683912406589-acc9kkbnqu7qgao221kuk6aqanqli01b.apps.googleusercontent.com&client_secret=FsTiRJz155vCC0CE3HRu-v0u&grant_type=authorization_code&redirect_uri=http://localhost:4200/appadmin/code`
 
 
     return this._http.post( `https://www.googleapis.com/oauth2/v4/token`,
