@@ -1,6 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { AuthService } from '../../auth.service';
+import { auth } from 'firebase';
+
+declare var gapi: any;
 
 @Component({
   selector: 'mii-login-button',
@@ -8,6 +11,9 @@ import { AuthService } from '../../auth.service';
   styleUrls: ['./login-button.component.scss']
 })
 export class LoginButtonComponent implements OnInit {
+  public authIsLoaded: boolean = false;
+  public isLoggedIn: boolean = false;
+  public user: any;
 
   constructor(
     public dialog: MatDialog,
@@ -15,6 +21,20 @@ export class LoginButtonComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this._auth.isLoaded$.subscribe( value => {
+        this.authIsLoaded = value;
+    });
+
+    this._auth.isLoggedIn$.subscribe( value => {
+        this.isLoggedIn = value;
+    });
+
+    this._auth.user$.subscribe( value => {
+      console.log(value);
+      this.user = value;
+    });
+
+    this._auth.loadAuth2();
   }
 
   openDialog(): void {
@@ -23,7 +43,11 @@ export class LoginButtonComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this._auth.googleSingIn()
+      if(this.user){
+        console.log(this.user);
+        return;
+      }
+      this._auth.googleSingIn();
     });
   }
 

@@ -3,7 +3,7 @@ import { ComunesModule } from './comunes.module';
 
 // *Global modules
 import { MaterialModule } from "./material.module";
-import { FirebaseModule } from './Firebase.module';
+import { FirebaseModule } from './firebase.module';
 
 // *ROOT modules
 import { AppRoutingModule } from './app-routing.module';

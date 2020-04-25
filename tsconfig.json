@@ -14,7 +14,10 @@
     "resolveJsonModule": true,
     "typeRoots": [
       "node_modules/@types",
+      "gapi",
+      "gapi.auth2"
     ],
+    "types": ["gapi", "gapi.auth2"],
     "lib": [
       "es2018",
       "dom"

@@ -6,7 +6,9 @@ import { AuthPublicComponent } from './components/public/auth-public.component';
 import { AuthGoogleButtonComponent } from './components/auth-google-button/auth-google-button.component';
 import { LoginButtonComponent, LoginButtonDialog } from './components/login-button/login-button.component';
 
+/// <reference types="gapi" />
 
+declare var gapi:any;
 
 @NgModule({
   declarations: [
@@ -14,7 +16,7 @@ import { LoginButtonComponent, LoginButtonDialog } from './components/login-butt
     AuthPublicComponent,
     AuthGoogleButtonComponent,
     LoginButtonComponent,
-    LoginButtonDialog,
+    LoginButtonDialog
   ],
   entryComponents: [
     LoginButtonDialog
