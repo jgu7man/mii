@@ -11,7 +11,7 @@
 // hue. Available color palettes: https://material.io/design/color/
 $agenteMii-primary: mat-palette($mat-teal, A400, 500, 800);
 $agenteMii-accent: mat-palette($mat-yellow, 400, 200, 300);
-$background-color: map_get($mat-teal, 50);
+$agenteMii-background: map_get($mat-teal, 50);
 // The warn palette is optional (defaults to red).
 $agenteMii-warn: mat-palette($mat-red);
 // Create the theme object (a Sass map containing all of the palettes).
@@ -20,6 +20,6 @@ $agenteMii-theme: mat-light-theme($agenteMii-primary, $agenteMii-accent, $agente
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 $background: map-get($agenteMii-theme, background);
-$background: map_merge($background, (background: $background-color));
+$background: map_merge($background, (background: $agenteMii-background));
 $agenteMii-theme: map_merge($agenteMii-theme, (background: $background));
 @include angular-material-theme($agenteMii-theme);

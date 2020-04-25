@@ -98,10 +98,11 @@ export class AuthService{
       });
   }
   async createProject():Promise<void>{
-    let scopesToCheck = ['https://www.googleapis.com/auth/cloud-platform '];
+    let scopesToCheck = ['https://www.googleapis.com/auth/cloud-platform'];
 
+    let googleUser = await this.auth2.currentUser.get();
+    console.log(googleUser);
     return new Promise( (resolve, reject) => {
-      let googleUser = this.auth2.currentUser.get();
       if(googleUser.hasGrantedScopes(scopesToCheck[0])){
         console.log('OK you may do the request now');
         gapi.client.cloudresourcemanager.projects.create({
@@ -117,6 +118,7 @@ export class AuthService{
       }else {
         //lets get permission
         //not suppose to be happend yet
+        console.log('No Entre!!');
       }
     });
   }

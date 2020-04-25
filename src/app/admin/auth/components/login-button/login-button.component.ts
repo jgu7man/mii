@@ -36,7 +36,9 @@ export class LoginButtonComponent implements OnInit {
 
     this._auth.loadAuth2();
   }
-
+  createProject(): void {
+    this._auth.createProject();
+  }
   openDialog(): void {
     const dialogRef = this.dialog.open(LoginButtonDialog, {
       width: '350px',

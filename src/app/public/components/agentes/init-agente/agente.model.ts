@@ -6,7 +6,9 @@ export class AgenteModel {
         public timeZone: string,
         public description?: string,
         public avatarUri?: string,
-        public agenteId?: string
+        public agenteId?: string,
+        public clientToken?: string,
+        public developerToken?: string,
     ){}
 
 }

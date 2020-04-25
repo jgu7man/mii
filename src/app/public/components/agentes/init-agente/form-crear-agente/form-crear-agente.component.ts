@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AgenteModel } from '../agente.model';
-import { AgenteService } from '../../agente.service';
+import { AgenteService } from './crear-agente.service';
 
 @Component({
   selector: 'mii-form-crear-agente',
