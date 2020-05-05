@@ -1,7 +1,8 @@
-<div *ngIf="this.isLoggedIn; else login">
-    <button mat-raised-button (click)="_auth.singOut()">Cerrar Sesión</button>
+<div *ngIf="this.isLoggedIn ; else login">
+    <button mat-raised-button (click)="signOut()">Cerrar Sesión</button>
+    <button mat-raised-button (click)="createProject()">Crear proyecto</button>
+    <button mat-raised-button (click)="getProjects()">Ver proyectos</button>
 </div>
 <ng-template #login>
     <button mat-raised-button (click)="openDialog()">Ingresar</button>
-    <button mat-raised-button (click)="createProject()">Crear proyecto</button>
 </ng-template>

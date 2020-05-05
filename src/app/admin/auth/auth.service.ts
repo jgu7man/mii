@@ -111,7 +111,10 @@ export class AuthService{
             "projectId": "algonuevo-2492"
           }
         }).then((response) => {
-          console.log('All good: ', response);
+          console.log('All good: ');
+          console.log(response.result);
+          debugger;
+          this.getOperations(response.result.name);
         }, err => {
           console.error("Error occurred:", err);
         })
@@ -122,12 +125,43 @@ export class AuthService{
       }
     });
   }
-  private updateSignInStatus(isSignedIn: boolean): void{
-    let googleUser = this.auth2.currentUser.get();
-    this.user$.next(googleUser);
-    console.log("User Logged In", this.user$);
-    console.log("User is signed In?:"+ isSignedIn);
-    this.isLoggedIn$.next(isSignedIn);
+
+  private getOperations(name: string): void {
+    return gapi.client.cloudresourcemanager.operations.get({name})
+      .then((result) => {
+        console.log("Success", result);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+  getProyects(projectId?:string): Promise<void>{
+
+    return new Promise( (resolve, reject) => {
+      if(!projectId){
+        return gapi.client.cloudresourcemanager.projects.list({})
+          .then(response => {
+            console.log("Listed Projects: ", response);
+          }, err => {
+            console.log(err)
+          });
+      }
+    })
+  }
+  setSignInStatus(isSignedIn: boolean): Promise<void> {
+    return new Promise((resolve, reject) => {
+      let _thus = this;
+      console.log(_thus);
+      let googleUser = this.auth2.currentUser.get();
+      this.user$.next(googleUser);
+      console.log("User Logged In", this.user$);
+      console.log("User is signed In?:"+ isSignedIn);
+      this.isLoggedIn$.next(isSignedIn);
+    })
+  }
+  updateSignInStatus(isSignedIn: boolean): void{
+    this.setSignInStatus.bind(this);
+    this.setSignInStatus(isSignedIn);
   }
   // // ? Obtiene token
   // async getToken() {
@@ -169,14 +203,7 @@ export class AuthService{
 
   //? Cerrar sesión
   signOut(): void {
-    this.auth2.signOut().then( () => {
-      this.ngZone.run(() => {
-        this.isLoggedIn$.next(false);
-        this.user$ .next(null);
-      });
-    }, (err) => {
-      console.error(err);
-    });
+    this.auth2.signOut();
   }
   async singOut() {
     await this.afAuth.auth.signOut();
@@ -272,7 +299,9 @@ export class AuthService{
               console.log('Library Loaded');
               //equals to getAuthInstance I belive so, lol
               this.auth2 = auth;
+              //activo el listener
               this.auth2.isSignedIn.listen(this.updateSignInStatus);
+              this.isLoggedIn$.next(this.auth2.isSignedIn.get());
             });
           })
          .then(resolve, reject);

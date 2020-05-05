@@ -23,10 +23,12 @@ export class LoginButtonComponent implements OnInit {
   ngOnInit() {
     this._auth.isLoaded$.subscribe( value => {
         this.authIsLoaded = value;
+        console.log('is Loaded:', this.authIsLoaded);
     });
 
     this._auth.isLoggedIn$.subscribe( value => {
-        this.isLoggedIn = value;
+      this.isLoggedIn = value;
+      console.log('is Log In?:', this.isLoggedIn);
     });
 
     this._auth.user$.subscribe( value => {
@@ -51,6 +53,13 @@ export class LoginButtonComponent implements OnInit {
       }
       this._auth.googleSingIn();
     });
+  }
+  getProjects(): void{
+    this._auth.getProyects();
+  }
+  signOut():void {
+    //
+    this._auth.signOut();
   }
 
 }
