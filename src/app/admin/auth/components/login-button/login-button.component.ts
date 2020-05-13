@@ -23,10 +23,7 @@ export class LoginButtonComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this._auth.openPopup().subscribe( res => {
-        console.log( 'se autenticó' )
-        console.log(res)
-      })
+      this._auth.googleSingIn()
     });
   }
 

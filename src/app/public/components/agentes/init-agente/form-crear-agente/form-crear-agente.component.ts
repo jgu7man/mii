@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AgenteModel } from '../agente.model';
 import { AgenteService } from './crear-agente.service';
+import { AuthService } from '../../../../../admin/auth/auth.service';
 
 @Component({
   selector: 'mii-form-crear-agente',
@@ -11,7 +12,8 @@ export class FormCrearAgenteComponent implements OnInit {
 
   agente: AgenteModel
   constructor(
-    private _agente: AgenteService
+    private _agente: AgenteService,
+    private _auth: AuthService
   ) {
     this.agente = new AgenteModel('','','es-419','America/New_York','','')
   }
@@ -23,8 +25,11 @@ export class FormCrearAgenteComponent implements OnInit {
 
 
   onSubmit() {
-    console.log(this.agente)
-    this._agente.saveAgent(this.agente)
+    this._auth.getAccessToken()
+    this._auth.authenticated$.subscribe( token => {
+      this._agente.saveAgent(this.agente)
+      console.log('captura de token');
+    })
   }
 
 

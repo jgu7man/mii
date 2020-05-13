@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { auth } from 'firebase/app'
 import { Router } from '@angular/router';
-import { of, Observable, Subject } from 'rxjs';
+import { of, Observable, Subject, AsyncSubject } from 'rxjs';
 import { switchMap, first } from 'rxjs/operators';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 // import * as google from 'googleapis'
@@ -45,7 +45,11 @@ export class AuthService {
    // ? Iniciar sesión con una cuenta google
   async googleSingIn() {
     // Abre el popup de autenticación
+    
     const provider = new auth.GoogleAuthProvider();
+    provider.addScope( 'https://www.googleapis.com/auth/cloud-platform' )
+    provider.addScope( 'https://www.googleapis.com/auth/cloudplatformprojects' )
+    provider.addScope( 'https://www.googleapis.com/auth/dialogflow' )
     var credential = await this.afAuth.auth.signInWithPopup(provider)
       
     
@@ -72,8 +76,8 @@ export class AuthService {
       localStorage.setItem('mii', JSON.stringify(newData))
     }
 
-    
-    this.router.navigate(['']);
+    this.getToken()    
+    this.router.navigate(['/dashboard/agent/init']);
   }
 
 
@@ -94,6 +98,7 @@ export class AuthService {
     var json = await credential.credential.toJSON()
     console.log(json)
     var accessToken = json[ 'oauthAccessToken' ]
+
     localStorage.setItem('access_token', accessToken)
 
       // localStorage.setItem('accessToken', accessToken )
@@ -144,14 +149,54 @@ export class AuthService {
   }
 
 
+  getAccessToken():Observable<any> {
+    
+    var googleTokens = JSON.parse( localStorage.getItem( 'googleTokens' ) )
+    if ( googleTokens ) {
+      
+      console.log('Refresh token');
+      this.refreshToken( googleTokens.refresh_token ).subscribe( res => {
+        console.log( res );
+        if ( res.error ) { }
+        else {
+          localStorage.setItem( 'access_token', JSON.stringify( res.access_token))
+          return this.authenticated$.next( res.access_token)
+        }
+      })
+    } else {
+      console.log('New tokens');
+      this.openPopup()
+    }
+    return 
+  }
 
-  openPopup (): Observable<any> {
+  refreshToken(refreshToken):Observable<any> {
+    const headers = new HttpHeaders( {
+        'Host': 'oauth2.googleapis.com',
+        'Content-Type': 'application/x-www-form-urlencoded'
+    } )
+
+    const body = `client_id=683912406589-acc9kkbnqu7qgao221kuk6aqanqli01b.apps.googleusercontent.com&client_secret=FsTiRJz155vCC0CE3HRu-v0u&refresh_token=${ refreshToken}&grant_type=refresh_token`
+    
+    return this._http.post( 'https://oauth2.googleapis.com/token', body, { headers: headers })
+  }
+
+
+
+  openPopup(): Observable<any> {
+    console.log('Abre popup');
     const name = 'Authorization'
     const options = `width=${ 500 },height=${ 600 },left=${ 0 },top=${ 0 }`;
     const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=683912406589-acc9kkbnqu7qgao221kuk6aqanqli01b.apps.googleusercontent.com&response_type=code&include_granted_scopes=true&scope=https%3A//www.googleapis.com/auth/cloud-platform&redirect_uri=http://localhost:4200/appadmin/code&access_type=offline`;
 
-    window.open( url, name );
-    return this.authenticated$
+    window.open( url, name, options )
+    window.addEventListener( 'message', event => {
+      console.log( event );
+      if ( event.origin === 'http://localhost:4200' ) {
+        this.authenticated$.next(true)
+      }
+    })
+    return 
   }
 
 
