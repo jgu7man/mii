@@ -3,9 +3,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { auth } from 'firebase/app'
 import { Router } from '@angular/router';
-import { of, Observable, Subject } from 'rxjs';
-import { switchMap, first } from 'rxjs/operators';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { of, Observable, Subject, throwError } from 'rxjs';
+import { switchMap, first, catchError } from 'rxjs/operators';
+import { HttpHeaders, HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 // import * as google from 'googleapis'
 
 // const oauth2Client = new google.auth.OAuth2(
@@ -40,7 +40,43 @@ export class AuthService {
    }
 
   
-
+  createNewAgent(projectName: string, projectId: string, agentName: string):Observable<{}>{
+    const _Url = "https://us-central1-main-agentesmart.cloudfunctions.net/createProject"
+    // let options: {
+    //   headers?: HttpHeaders | {[header: string]: string | string[]},
+    //   observe?: 'body' | 'events' | 'response',
+    //   params?: HttpParams|{[param: string]: string | string[]},
+    //   reportProgress?: boolean,
+    //   responseType?: 'arraybuffer'|'blob'|'json'|'text',
+    //   withCredentials?: boolean,
+    // }
+    let params = {
+      name: projectName,
+      displayName: agentName,
+      projectId
+    }
+    return this._http.post<{}>(_Url,params, {
+      responseType: 'json',
+      observe:'body'
+    }).pipe(
+      catchError(this.handleError)
+    )
+  }
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    }
+    // return an observable with a user-facing error message
+    return throwError(
+      'Something bad happened; please try again later.');
+  }
   
    // ? Iniciar sesión con una cuenta google
   async googleSingIn() {

@@ -8,7 +8,7 @@ import { AuthService } from '../../auth.service';
   styleUrls: ['./login-button.component.scss']
 })
 export class LoginButtonComponent implements OnInit {
-
+  private agente = null;
   constructor(
     public dialog: MatDialog,
     public _auth: AuthService
@@ -28,6 +28,15 @@ export class LoginButtonComponent implements OnInit {
         console.log(res)
       })
     });
+  }
+  createAgent(): void {
+    let projectName = "prueba07", 
+      projectId = "prueba07-a230",
+      agentName = "nuevoagente07"
+    this._auth.createNewAgent(projectName,projectId, agentName).subscribe(data => {
+      console.log(data);
+      this.agente = data;
+    }) 
   }
 
 }
